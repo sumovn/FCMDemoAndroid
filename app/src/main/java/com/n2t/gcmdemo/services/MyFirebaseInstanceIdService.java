@@ -25,6 +25,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.greenrobot.eventbus.EventBus;
+
 public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
 
     private static final String TAG = "MyFirebaseIIDService";
@@ -40,6 +42,8 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         String token = FirebaseInstanceId.getInstance().getToken();
         //Log.d(TAG, "FCM Token: " + token);
         System.out.println("FCM Token: " + token);
+
+        EventBus.getDefault().post(token);
 
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit();
         editor.putString("fcm_token", token);
